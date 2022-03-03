@@ -337,6 +337,31 @@ router.get('/tiktod/stalk', async (req, res, next) => {
          })
 })
 
+router.get('/download/tiktok', async (req, res, next) => {
+    var Apikey = req.query.apikey,
+        url = req.query.url
+
+	if(!Apikey) return res.json(loghandler.notparam)
+	if(listkey.includes(Apikey)){
+     if (!url) return res.json(loghandler.noturl)
+     TiktokDownloader(`${url}`)
+        .then(data => {
+        var result = data.result;
+             res.json({
+               status: true,
+               code: 200,
+               creator: `${creator}`,
+               result
+             })
+         })
+         .catch((error) => {
+            res.json(error);
+        });
+      } else {
+     res.json(loghandler.invalidKey)
+     }
+});
+
 router.get('/randomquote', async (req, res, next) => {
         var apikeyInput = req.query.apikey
             
