@@ -341,8 +341,8 @@ router.get('/download/tiktok', async (req, res, next) => {
     var Apikey = req.query.apikey,
         url = req.query.url
 
-	if(!Apikey) return res.json(loghandler.notparam)
-	if(listkey.includes(Apikey)){
+	if(!apikeyInput) return res.json(loghandler.notparam)
+    if (apikey != 'LordArdy') return res.json(loghandler.invalidKey)
      if (!url) return res.json(loghandler.noturl)
      TiktokDownloader(`${url}`)
         .then(data => {
